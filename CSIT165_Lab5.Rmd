@@ -1,30 +1,391 @@
 ---
-title: "CSIT165-Lab5"
-author: "SAF"
+title: "Lab 5: Visualizing Coronavirus Data"
+author: "Name: Sal Figueroa"
 date: "`r Sys.Date()`"
-output: pdf_document
+output: 
+  pdf_document:
+    toc: true
+    toc_depth: 3
+header-includes:
+#These packages are not necessary to complete the assignment and or only used to provide an example. 
+  - \usepackage{booktabs}
+  - \usepackage{longtable}
+  - \usepackage{array}
+  - \usepackage{multirow}
+  - \usepackage{wrapfig}
+  - \usepackage{float}
+  - \usepackage{colortbl}
+  - \usepackage{pdflscape}
+  - \usepackage{threeparttable}
+  - \usepackage{threeparttablex}
+  - \usepackage[normalem]{ulem}
+  - \usepackage{makecell}
+  - \usepackage{xcolor}
+  - \usepackage{ggrepel}
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE}
+#### Load necessary library ####
+packages <- c("knitr", "kableExtra", "magrittr", "readr", "geosphere")
+
+install_me <- packages[!(packages %in% installed.packages()[, "Package"])]
+if (length(install_me)) install.packages(install_me)
+
+#library(gridextra)
+library(knitr)
+library(magrittr)
+library(readr)
+library(geosphere)
+library(ggplot2)
+library(treemapify)
+library(tidyverse)
+library(ggfittext)
+library(scales)
+library(dplyr)
+library(data.table)
+library(ggrepel)
+library(scales)
+library(stringr)
+
+knitr::opts_chunk$set(echo=TRUE)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r Data setup, include = FALSE}
+#time_series_covid19_confirmed_US.csv 1154 columns, 3342 rows.
+Confirmed_Global <- as.data.frame(read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"))
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+#Serve as data frame length and width variables
+rowmax <- nrow(Confirmed_Global[,]) #limit Qty of Rows 289
+colmax <- ncol(Confirmed_Global[,]) #limit Qty of Rows 1147
 
-```{r cars}
-summary(cars)
+
+NameCol <- as.data.frame(colnames(Confirmed_Global))
+MAXNameCol <- nrow(NameCol)
+#NameRow <- rownames(Confirmed_Global)
+#df_rowCol <- data.frame(NameCol)
+
+#temp <- as.data.frame(read.csv("https://github.com/TheMandarax/CSIT-165/Module-13/human_proteins.RData"))
+load("X:/OneDrive/CSIT165_RProgramming/MOD 13 - Lab5/CSIT165-Lab5/human_proteins.RData")
+
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
+## Github Repository
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+*Holds all related files*
+
+[github: Figgs0bit-Lab4 (https://github.com/Figgs0bit/CSIT165-Lab5.git)](https://github.com/Figgs0bit/CSIT165-Lab5)
+
+
+## Required data sets
+
+*This lab represents data downloaded on 04/xx/2025*
+
+[Human Proteins Data Set ()](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
+
+
+### *1. 2019 Novel Coronavirus COVID-19 (2019-nCoV) Global Confirmations.*
+
+*This data set is operated by the John Hopkins University Center for Systems Science and Engineering (JHU CSSE). Data set includes a daily time series     CSV summary table confirmed cases of COVID-19. Lat and Long refer to coordinate references for the data field. Date fields are stored in MM/DD/YYYY        format.*
+
+
+[2019 Novel Coronavirus COVID-19 (2019-nCoV) Global         Confirmations](https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series)
+
+
+### *2. Human Proteins Data Set*
+
+*This data set is a tibble created from parsing Homo sapiens protein fasta files curated by the Genome Reference Consortium as part of the Human Genome   Project. The original protein fasta file can be found in NCBI, here. Data consists of two columns, Gene and Protein.Sequence. Gene represents every gene   product, or protein, made by humans. Protein.Sequence represents the primary amino acid structure of its correspondent gene. Each amino acid is            represented as a single capital letter and the sequence of letters is unique to each gene.*
+
+
+## Instructions
+
+*Before beginning your objectives in your final document, please state which day you downloaded the data sets on for analysis. The objectives for this lab will cumulatively cover many subjects discussed in this course and will also contain an objective for manipulating strings.*
+
+*The surgeon general for the United States recently created a new data science initiative, CSIT-165, that uses data science to characterize pandemic diseases. CSIT-165 disseminates data driven analyses to state governors. You are a data scientist for CSIT-165 and it is up to you and you alone to manipulate and visualize COVID-19 data for disease control.*
+
+
+## Objective 1
+
+*Create a scatter plot for counts per day of the the top five confirmed countries. For this objective, please use dplyr and tidyr to manipulate data and ggplot2 to create the visualization. Scatter plot must have specified colors, a non-standard theme for display, and custom a customized titles, axis labels, and legend labels.*
+
+
+```{r ob1}
+DF <- Confirmed_Global
+
+#Reorganizes the data frame with Total_unaccounted descending.  
+Decrease_DF <- DF[order(DF$X3.9.23, decreasing = TRUE),] 
+
+#Creates data frame with the top 5 Total unaccounted cases 
+top5_DF <- head(Decrease_DF, 5)
+
+top5_DF <- subset(top5_DF, select = -c(Province.State, Lat, Long))
+
+
+Date_Days <- as.Date(seq(as.Date("2020/1/22"), as.Date("2023/3/9"), "days"))
+
+# Number of dates to generate
+n_dates <- length(Date_Vector) #1143
+
+
+Atmp <- as.vector(t(top5_DF[1,]))
+Atmp <- as.numeric(Atmp[2:1144])
+
+Btmp <- as.vector(t(top5_DF[2,]))
+Btmp <- as.numeric(Btmp[2:1144])
+
+Ctmp <- as.vector(t(top5_DF[3,]))
+Ctmp <- as.numeric(Ctmp[2:1144])
+
+Dtmp <- as.vector(t(top5_DF[4,]))
+Dtmp <- as.numeric(Dtmp[2:1144])
+
+Etmp <- as.vector(t(top5_DF[5,]))
+Etmp <- as.numeric(Etmp[2:1144])
+
+T_top5_DF <- data.frame(Date_Days, Atmp, Btmp, Ctmp, Dtmp, Etmp)
+
+colnames(T_top5_DF) <- c("Date", top5_DF[1,1], top5_DF[2,1], top5_DF[3,1], top5_DF[4,1], top5_DF[5,1])
+
+
+
+# Reshape to long format: assume T_top5_DF has Date + 5 country columns
+T_top5_long <- T_top5_DF %>%
+  pivot_longer(-Date, names_to = "Country", values_to = "Cases")
+
+
+# Plot all 5 countries in one panel
+ggplot(T_top5_long, aes(x = Date, y = Cases, color = Country)) +
+
+  geom_line(size = 0.125) +
+
+  labs(title = "COVID Data for Top 5 Countries", x = "Date: (Year/Day/Month)", y = "Confrimed Global Cases") +
+
+  theme_minimal(base_size = 8) +
+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), axis.text.y = element_text(angle = 315, hjust = 1),
+        axis.title.y = element_text(margin = margin(r = 12)),
+        panel.grid.major = element_line(size = 0.2),  # Thinner major grid lines
+        panel.grid.minor = element_line(size = 0.0625)   # Even thinner minor grid lines
+        )
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Objective 2
+
+*Understanding how COVID-19 enters human cells requires that we have a better understanding of human proteins. It has been shown that COVID-19 is able to enter cells by binding to Angiotensin-Converting Enzyme 2 receptors in the heart, lungs, and intestines. Angiotensin-Converting Enzyme 2 is used by the body to regulate blood pressure and inflammation.*
+
+*1.	Show how many different isoforms of Angiotensin-Converting Enzyme 2 humans make using str_detect and regular expressions.*
+*Use the pattern “Angiotensin-Converting Enzyme 2 isoform” with regular expressions to include all variations irrespective of first letter capitalization.*
+
+*2.	Show the amino acid sequence between the 27th and 63rd amino acid sequence for each isoform using str_sub.*
+
+*3.	Print a statement using cat with paste or sprintf of the first thirty amino acids for each isoform with a new line after each isoform and sequence listing. cat is necessary to use in combination with paste or sprintf to output concatenation with a new line.*
+
+```{r ob2}
+
+
+##Load Data
+# Load CSV file
+#proteins <- read.csv("human_proteins.csv", stringsAsFactors = FALSE)
+proteins <- human_proteins
+# Check column names
+str(proteins)
+
+
+# colnames(proteins)
+# "Gene" "Protein.Sequence"
+
+
+##Q1. Match All ACE2 Isoforms (Case-Insensitive)
+# Filter rows where Gene matches "Angiotensin-Converting Enzyme 2 isoform" (case-insensitive)
+ace2_isoforms <- proteins %>%
+  filter(str_detect(Gene, regex("Angiotensin-Converting Enzyme 2 isoform", ignore_case = TRUE)))
+
+# Preview matched isoforms
+head(ace2_isoforms)
+
+
+
+##Q2. Extract Amino Acids 27–63 for Each Isoform
+# Use str_sub to extract positions 27 to 63 from Protein.Sequence
+ace2_isoforms <- ace2_isoforms %>%
+  mutate(seq_27_63 = str_sub(Protein.Sequence, 27, 63))
+
+# Display the extracted subsequence
+ace2_isoforms %>% select(Gene, seq_27_63)
+
+
+
+##Q3. Print First 30 Amino Acids with Line Breaks
+# Output first 30 amino acids using cat and sprintf
+cat("First 30 amino acids of each isoform:\n\n")
+
+for (i in 1:nrow(ace2_isoforms)) {
+  gene_name <- ace2_isoforms$Gene[i]
+  seq30 <- str_sub(ace2_isoforms$Protein.Sequence[i], 1, 30)
+  cat(sprintf("%s: %s\n\n", gene_name, seq30))
+}
+
+
+```
+
+
+
+
+#####################################################################################
+
+
+```{r setup, include = FALSE}
+#### Load necessary library ####
+packages <- c("knitr", "kableExtra", "magrittr", "readr", "geosphere")
+
+install_me <- packages[!(packages %in% installed.packages()[, "Package"])]
+if (length(install_me)) install.packages(install_me)
+
+#library(gridextra)
+library(knitr)
+library(magrittr)
+library(readr)
+library(geosphere)
+library(ggplot2)
+library(treemapify)
+library(tidyverse)
+library(ggfittext)
+library(scales)
+library(dplyr)
+library(data.table)
+library(ggrepel)
+library(scales)
+library(stringr)
+
+knitr::opts_chunk$set(echo=TRUE)
+
+#time_series_covid19_confirmed_US.csv 1154 columns, 3342 rows.
+Confirmed_Global <- as.data.frame(read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"))
+
+#Serve as data frame length and width variables
+rowmax <- nrow(Confirmed_Global[,]) #limit Qty of Rows 289
+colmax <- ncol(Confirmed_Global[,]) #limit Qty of Rows 1147
+
+
+NameCol <- as.data.frame(colnames(Confirmed_Global))
+MAXNameCol <- nrow(NameCol)
+#NameRow <- rownames(Confirmed_Global)
+#df_rowCol <- data.frame(NameCol)
+
+#temp <- as.data.frame(read.csv("https://github.com/TheMandarax/CSIT-165/Module-13/human_proteins.RData"))
+load("X:/OneDrive/CSIT165_RProgramming/MOD 13 - Lab5/CSIT165-Lab5/human_proteins.RData")
+
+```
+
+
+```{r ob1}
+DF <- Confirmed_Global
+
+#Reorganizes the data frame with Total_unaccounted descending.  
+Decrease_DF <- DF[order(DF$X3.9.23, decreasing = TRUE),] 
+
+#Creates data frame with the top 5 Total unaccounted cases 
+top5_DF <- head(Decrease_DF, 5)
+
+top5_DF <- subset(top5_DF, select = -c(Province.State, Lat, Long))
+
+
+Date_Days <- as.Date(seq(as.Date("2020/1/22"), as.Date("2023/3/9"), "days"))
+
+# Number of dates to generate
+n_dates <- length(Date_Vector) #1143
+
+
+Atmp <- as.vector(t(top5_DF[1,]))
+Atmp <- as.numeric(Atmp[2:1144])
+
+Btmp <- as.vector(t(top5_DF[2,]))
+Btmp <- as.numeric(Btmp[2:1144])
+
+Ctmp <- as.vector(t(top5_DF[3,]))
+Ctmp <- as.numeric(Ctmp[2:1144])
+
+Dtmp <- as.vector(t(top5_DF[4,]))
+Dtmp <- as.numeric(Dtmp[2:1144])
+
+Etmp <- as.vector(t(top5_DF[5,]))
+Etmp <- as.numeric(Etmp[2:1144])
+
+T_top5_DF <- data.frame(Date_Days, Atmp, Btmp, Ctmp, Dtmp, Etmp)
+
+colnames(T_top5_DF) <- c("Date", top5_DF[1,1], top5_DF[2,1], top5_DF[3,1], top5_DF[4,1], top5_DF[5,1])
+
+
+
+# Reshape to long format: assume T_top5_DF has Date + 5 country columns
+T_top5_long <- T_top5_DF %>%
+  pivot_longer(-Date, names_to = "Country", values_to = "Cases")
+
+
+# Plot all 5 countries in one panel
+ggplot(T_top5_long, aes(x = Date, y = Cases, color = Country)) +
+
+  geom_line(size = 0.125) +
+
+  labs(title = "COVID Data for Top 5 Countries", x = "Date: (Year/Day/Month)", y = "Confrimed Global Cases") +
+
+  theme_minimal(base_size = 8) +
+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1), axis.text.y = element_text(angle = 315, hjust = 1),
+        axis.title.y = element_text(margin = margin(r = 12)),
+        panel.grid.major = element_line(size = 0.2),  # Thinner major grid lines
+        panel.grid.minor = element_line(size = 0.0625)   # Even thinner minor grid lines
+        )
+
+```
+
+
+```{r ob2}
+
+
+##Load Data
+# Load CSV file
+#proteins <- read.csv("human_proteins.csv", stringsAsFactors = FALSE)
+proteins <- human_proteins
+# Check column names
+str(proteins)
+
+
+# colnames(proteins)
+# "Gene" "Protein.Sequence"
+
+
+##Q1. Match All ACE2 Isoforms (Case-Insensitive)
+# Filter rows where Gene matches "Angiotensin-Converting Enzyme 2 isoform" (case-insensitive)
+ace2_isoforms <- proteins %>%
+  filter(str_detect(Gene, regex("Angiotensin-Converting Enzyme 2 isoform", ignore_case = TRUE)))
+
+# Preview matched isoforms
+head(ace2_isoforms)
+
+
+
+##Q2. Extract Amino Acids 27–63 for Each Isoform
+# Use str_sub to extract positions 27 to 63 from Protein.Sequence
+ace2_isoforms <- ace2_isoforms %>%
+  mutate(seq_27_63 = str_sub(Protein.Sequence, 27, 63))
+
+# Display the extracted subsequence
+ace2_isoforms %>% select(Gene, seq_27_63)
+
+
+
+##Q3. Print First 30 Amino Acids with Line Breaks
+# Output first 30 amino acids using cat and sprintf
+cat("First 30 amino acids of each isoform:\n\n")
+
+for (i in 1:nrow(ace2_isoforms)) {
+  gene_name <- ace2_isoforms$Gene[i]
+  seq30 <- str_sub(ace2_isoforms$Protein.Sequence[i], 1, 30)
+  cat(sprintf("%s: %s\n\n", gene_name, seq30))
+}
+
+
+```
