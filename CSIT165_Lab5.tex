@@ -195,6 +195,39 @@ a customized titles, axis labels, and legend labels.}
 
 \begin{Shaded}
 \begin{Highlighting}[]
+\CommentTok{\#time\_series\_covid19\_confirmed\_US.csv 1154 columns, 289 rows.}
+\NormalTok{Confirmed\_Global }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{read.csv}\NormalTok{(}\StringTok{"https://raw.githubusercontent.com/CSSEGISandData/COVID{-}19/refs/heads/master/csse\_covid\_19\_data/csse\_covid\_19\_time\_series/time\_series\_covid19\_confirmed\_global.csv"}\NormalTok{))}
+\CommentTok{\#print("ATestFlag/n")}
+\CommentTok{\#Serve as data frame length and width variables if needed}
+\NormalTok{rowmax }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(Confirmed\_Global[,]) }\CommentTok{\#limit Qty of Rows 289}
+\NormalTok{colmax }\OtherTok{\textless{}{-}} \FunctionTok{ncol}\NormalTok{(Confirmed\_Global[,]) }\CommentTok{\#limit Qty of Rows 1147}
+
+
+
+
+\CommentTok{\#loads column headers in data.frame}
+\NormalTok{NameCol }\OtherTok{\textless{}{-}} \FunctionTok{as.data.frame}\NormalTok{(}\FunctionTok{colnames}\NormalTok{(Confirmed\_Global))}
+
+\CommentTok{\#Var holds the length of the NameCol data.frame}
+\NormalTok{MAXNameCol }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(NameCol)}
+
+\CommentTok{\#Name of the final column name}
+\NormalTok{FinalColName }\OtherTok{\textless{}{-}}\NormalTok{ NameCol[MAXNameCol,] }
+
+
+\CommentTok{\#Loads the URL of the .RData file in the GitHub repository}
+\NormalTok{GitHuburl }\OtherTok{\textless{}{-}} \StringTok{"https://github.com/Figgs0bit/CSIT165{-}ModData/raw/refs/heads/master/Module{-}13/human\_proteins.RData"}
+\CommentTok{\#names the download for the *.Rdata file.}
+\NormalTok{RdataFile }\OtherTok{\textless{}{-}} \StringTok{"human\_proteins.RData"}
+
+\CommentTok{\#Download the file into the working directory, Note: mode{-}WB needed to download binary .rdata file.}
+\FunctionTok{download.file}\NormalTok{(GitHuburl, RdataFile, }\AttributeTok{mode =} \StringTok{"wb"}\NormalTok{)}
+\CommentTok{\#Load the .RData file from working directory into the R environment}
+\FunctionTok{load}\NormalTok{(RdataFile)}
+
+
+
+\DocumentationTok{\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#\#}
 \CommentTok{\#Ensure FinalColName is treated as a string}
 \NormalTok{FinalColName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(FinalColName)}
 

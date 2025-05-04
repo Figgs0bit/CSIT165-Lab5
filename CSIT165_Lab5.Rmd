@@ -51,37 +51,6 @@ knitr::opts_chunk$set(echo=TRUE)
 ```
 
 
-```{r Data setup, include = FALSE}
-#time_series_covid19_confirmed_US.csv 1154 columns, 289 rows.
-Confirmed_Global <- as.data.frame(read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"))
-
-#Serve as data frame length and width variables if needed
-rowmax <- nrow(Confirmed_Global[,]) #limit Qty of Rows 289
-colmax <- ncol(Confirmed_Global[,]) #limit Qty of Rows 1147
-
-#loads column headers in data.frame
-NameCol <- as.data.frame(colnames(Confirmed_Global))
-
-#Var holds the length of the NameCol data.frame
-MAXNameCol <- nrow(NameCol)
-
-#Name of the final column name
-FinalColName <- NameCol[MAXNameCol,] 
-
-
-#Loads the URL of the .RData file in the GitHub repository
-GitHuburl <- "https://github.com/Figgs0bit/CSIT165-ModData/raw/refs/heads/master/Module-13/human_proteins.RData"
-#names the download for the *.Rdata file.
-RdataFile <- "human_proteins.RData"
-
-#Download the file into the working directory, Note: mode-WB needed to download binary .rdata file.
-download.file(GitHuburl, RdataFile, mode = "wb")
-#Load the .RData file from working directory into the R environment
-load(RdataFile)
-
-```
-
-
 
 ## Github Repository
 
@@ -117,6 +86,7 @@ load(RdataFile)
 *The surgeon general for the United States recently created a new data science initiative, CSIT-165, that uses data science to characterize pandemic diseases. CSIT-165 disseminates data driven analyses to state governors. You are a data scientist for CSIT-165 and it is up to you and you alone to manipulate and visualize COVID-19 data for disease control.*
 
 
+
 ## Objective 1
 
 *Create a scatter plot for counts per day of the the top five confirmed countries. For this objective, please use dplyr and tidyr to manipulate data and ggplot2 to create the visualization. Scatter plot must have specified colors, a non-standard theme for display, and custom a customized titles, axis labels, and legend labels.*
@@ -124,6 +94,39 @@ load(RdataFile)
 
 ```{r ob1}
 
+#time_series_covid19_confirmed_US.csv 1154 columns, 289 rows.
+Confirmed_Global <- as.data.frame(read.csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/refs/heads/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"))
+#print("ATestFlag/n")
+#Serve as data frame length and width variables if needed
+rowmax <- nrow(Confirmed_Global[,]) #limit Qty of Rows 289
+colmax <- ncol(Confirmed_Global[,]) #limit Qty of Rows 1147
+
+
+
+
+#loads column headers in data.frame
+NameCol <- as.data.frame(colnames(Confirmed_Global))
+
+#Var holds the length of the NameCol data.frame
+MAXNameCol <- nrow(NameCol)
+
+#Name of the final column name
+FinalColName <- NameCol[MAXNameCol,] 
+
+
+#Loads the URL of the .RData file in the GitHub repository
+GitHuburl <- "https://github.com/Figgs0bit/CSIT165-ModData/raw/refs/heads/master/Module-13/human_proteins.RData"
+#names the download for the *.Rdata file.
+RdataFile <- "human_proteins.RData"
+
+#Download the file into the working directory, Note: mode-WB needed to download binary .rdata file.
+download.file(GitHuburl, RdataFile, mode = "wb")
+#Load the .RData file from working directory into the R environment
+load(RdataFile)
+
+
+
+#########################
 #Ensure FinalColName is treated as a string
 FinalColName <- as.character(FinalColName)
 
@@ -192,6 +195,18 @@ ggplot(T_top5_long, aes(x = Date, y = Cases, color = Country)) + #Loads each of 
 
 ```
 
+
+
+
+
+
+
+
+
+
+
+
+
 ## Objective 2
 
 *Understanding how COVID-19 enters human cells requires that we have a better understanding of human proteins. It has been shown that COVID-19 is able to enter cells by binding to Angiotensin-Converting Enzyme 2 receptors in the heart, lungs, and intestines. Angiotensin-Converting Enzyme 2 is used by the body to regulate blood pressure and inflammation.*
@@ -235,5 +250,6 @@ for (i in 1:nrow(ace2_isoforms)) {
   cat(sprintf("%s: %s\n\n", gene_name, seq30))
 }
 ```
+
 
 
