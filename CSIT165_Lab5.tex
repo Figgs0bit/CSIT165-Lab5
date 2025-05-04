@@ -1,0 +1,379 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\usepackage{ggrepel}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Lab 5: Visualizing Coronavirus Data},
+  pdfauthor={Name: Sal Figueroa},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lab 5: Visualizing Coronavirus Data}
+\author{Name: Sal Figueroa}
+\date{2025-05-04}
+
+\begin{document}
+\maketitle
+
+{
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+\subsection{Github Repository}\label{github-repository}
+
+\emph{Holds all related files}
+
+\href{https://github.com/Figgs0bit/CSIT165-Lab5}{github: Figgs0bit-Lab4
+(https://github.com/Figgs0bit/CSIT165-Lab5.git)}
+
+\subsection{Required data sets}\label{required-data-sets}
+
+\emph{This lab represents data downloaded on 04/xx/2025}
+
+\href{https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series}{Human
+Proteins Data Set ()}
+
+\subsubsection{\texorpdfstring{\emph{1. 2019 Novel Coronavirus COVID-19
+(2019-nCoV) Global
+Confirmations.}}{1. 2019 Novel Coronavirus COVID-19 (2019-nCoV) Global Confirmations.}}\label{novel-coronavirus-covid-19-2019-ncov-global-confirmations.}
+
+\emph{This data set is operated by the John Hopkins University Center
+for Systems Science and Engineering (JHU CSSE). Data set includes a
+daily time series CSV summary table confirmed cases of COVID-19. Lat and
+Long refer to coordinate references for the data field. Date fields are
+stored in MM/DD/YYYY format.}
+
+\href{https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series}{2019
+Novel Coronavirus COVID-19 (2019-nCoV) Global Confirmations}
+
+\subsubsection{\texorpdfstring{\emph{2. Human Proteins Data
+Set}}{2. Human Proteins Data Set}}\label{human-proteins-data-set}
+
+\emph{This data set is a tibble created from parsing Homo sapiens
+protein fasta files curated by the Genome Reference Consortium as part
+of the Human Genome Project. The original protein fasta file can be
+found in NCBI, here. Data consists of two columns, Gene and
+Protein.Sequence. Gene represents every gene product, or protein, made
+by humans. Protein.Sequence represents the primary amino acid structure
+of its correspondent gene. Each amino acid is represented as a single
+capital letter and the sequence of letters is unique to each gene.}
+
+\subsection{Instructions}\label{instructions}
+
+\emph{Before beginning your objectives in your final document, please
+state which day you downloaded the data sets on for analysis. The
+objectives for this lab will cumulatively cover many subjects discussed
+in this course and will also contain an objective for manipulating
+strings.}
+
+\emph{The surgeon general for the United States recently created a new
+data science initiative, CSIT-165, that uses data science to
+characterize pandemic diseases. CSIT-165 disseminates data driven
+analyses to state governors. You are a data scientist for CSIT-165 and
+it is up to you and you alone to manipulate and visualize COVID-19 data
+for disease control.}
+
+\subsection{Objective 1}\label{objective-1}
+
+\emph{Create a scatter plot for counts per day of the the top five
+confirmed countries. For this objective, please use dplyr and tidyr to
+manipulate data and ggplot2 to create the visualization. Scatter plot
+must have specified colors, a non-standard theme for display, and custom
+a customized titles, axis labels, and legend labels.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Ensure FinalColName is treated as a string}
+\NormalTok{FinalColName }\OtherTok{\textless{}{-}} \FunctionTok{as.character}\NormalTok{(FinalColName)}
+
+\CommentTok{\#Load Confirmed\_Global into temp variable}
+\NormalTok{DF }\OtherTok{\textless{}{-}}\NormalTok{ Confirmed\_Global}
+
+\CommentTok{\#Reorganize the data frame with the column specified in FinalColName in descending order}
+\NormalTok{Decrease\_DF }\OtherTok{\textless{}{-}}\NormalTok{ DF[}\FunctionTok{order}\NormalTok{(DF[[FinalColName]], }\AttributeTok{decreasing =} \ConstantTok{TRUE}\NormalTok{),]}
+
+
+\CommentTok{\#Creates data frame with the top 5 Total unaccounted cases.}
+\CommentTok{\#Here the "head" command trims away any row past the 5th row. }
+\NormalTok{top5\_DF }\OtherTok{\textless{}{-}} \FunctionTok{head}\NormalTok{(Decrease\_DF, }\DecValTok{5}\NormalTok{)}
+
+\CommentTok{\#Creates a vector full of Dates reflective of the data frame dates. }
+\NormalTok{Date\_Days }\OtherTok{\textless{}{-}} \FunctionTok{as.Date}\NormalTok{(}\FunctionTok{seq}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2020/1/22"}\NormalTok{), }\FunctionTok{as.Date}\NormalTok{(}\StringTok{"2023/3/9"}\NormalTok{), }\StringTok{"days"}\NormalTok{))}
+
+
+\CommentTok{\#Creates Vectors for the Top 5 Countries Data}
+\CommentTok{\#Rpw 1: Country}
+\NormalTok{rowOne }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(top5\_DF[}\DecValTok{1}\NormalTok{,]))}
+\NormalTok{rowOne }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(rowOne[}\DecValTok{5}\SpecialCharTok{:}\NormalTok{MAXNameCol])}
+\CommentTok{\#Rpw 2: Country}
+\NormalTok{rowTwo }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(top5\_DF[}\DecValTok{2}\NormalTok{,]))}
+\NormalTok{rowTwo }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(rowTwo[}\DecValTok{5}\SpecialCharTok{:}\NormalTok{MAXNameCol])}
+\CommentTok{\#Rpw 3: Country}
+\NormalTok{rowThree }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(top5\_DF[}\DecValTok{3}\NormalTok{,]))}
+\NormalTok{rowThree }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(rowThree[}\DecValTok{5}\SpecialCharTok{:}\NormalTok{MAXNameCol])}
+\CommentTok{\#Rpw 4: Country}
+\NormalTok{rowFour }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(top5\_DF[}\DecValTok{4}\NormalTok{,]))}
+\NormalTok{rowFour }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(rowFour[}\DecValTok{5}\SpecialCharTok{:}\NormalTok{MAXNameCol])}
+\CommentTok{\#Rpw 5: Country}
+\NormalTok{rowFive }\OtherTok{\textless{}{-}} \FunctionTok{as.vector}\NormalTok{(}\FunctionTok{t}\NormalTok{(top5\_DF[}\DecValTok{5}\NormalTok{,]))}
+\NormalTok{rowFive }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(rowFive[}\DecValTok{5}\SpecialCharTok{:}\NormalTok{MAXNameCol])}
+
+\CommentTok{\#Creates Data.frame with the dates and the top five countries.}
+\CommentTok{\#The data has now been formatted as in an Inverse matrix format}
+\NormalTok{T\_top5\_DF }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(Date\_Days, rowOne, rowTwo, rowThree, rowFour, rowFive)}
+
+\CommentTok{\#Renames the column names}
+\FunctionTok{colnames}\NormalTok{(T\_top5\_DF) }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Date"}\NormalTok{, top5\_DF[}\DecValTok{1}\NormalTok{,}\DecValTok{2}\NormalTok{], top5\_DF[}\DecValTok{2}\NormalTok{,}\DecValTok{2}\NormalTok{], top5\_DF[}\DecValTok{3}\NormalTok{,}\DecValTok{2}\NormalTok{], top5\_DF[}\DecValTok{4}\NormalTok{,}\DecValTok{2}\NormalTok{], top5\_DF[}\DecValTok{5}\NormalTok{,}\DecValTok{2}\NormalTok{])}
+
+\CommentTok{\#Converts data.frame to long format: assumes T\_top5\_DF has Date + 5 country columns}
+\CommentTok{\#{-}Date excludes the date here. Serves to plot multiple country data into one plot window. }
+\NormalTok{T\_top5\_long }\OtherTok{\textless{}{-}}\NormalTok{ T\_top5\_DF }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_longer}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{Date, }\AttributeTok{names\_to =} \StringTok{"Country"}\NormalTok{, }\AttributeTok{values\_to =} \StringTok{"Cases"}\NormalTok{)}
+
+
+
+\CommentTok{\# Plot all 5 countries in one panel}
+\FunctionTok{ggplot}\NormalTok{(T\_top5\_long, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Date, }\AttributeTok{y =}\NormalTok{ Cases, }\AttributeTok{color =}\NormalTok{ Country)) }\SpecialCharTok{+} \CommentTok{\#Loads each of the top 5 couties data via color = country}
+
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.125}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\#Sets thickness of line}
+
+  \CommentTok{\#Plot labels, title, x \& y axis}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"COVID Data for Top 5 Countries"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Date: (Year/Day/Month)"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Confrimed Global Cases"}\NormalTok{) }\SpecialCharTok{+} 
+
+  \FunctionTok{theme\_minimal}\NormalTok{(}\AttributeTok{base\_size =} \DecValTok{8}\NormalTok{) }\SpecialCharTok{+} \CommentTok{\#Creates simple plot theme w/ a size 8 font size}
+
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.text.x =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{90}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{), }\CommentTok{\#rotates x{-}axis text and hjust aligns the text to the right}
+        \AttributeTok{axis.text.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{angle =} \DecValTok{315}\NormalTok{, }\AttributeTok{hjust =} \DecValTok{1}\NormalTok{), }\CommentTok{\#rotates y{-}axis text and hjust aligns the text to the right}
+        \AttributeTok{axis.title.y =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{margin =} \FunctionTok{margin}\NormalTok{(}\AttributeTok{r =} \DecValTok{12}\NormalTok{)), }\CommentTok{\#adds margin to y axis}
+        \AttributeTok{panel.grid.major =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.2}\NormalTok{), }\CommentTok{\#major grid lines}
+        \AttributeTok{panel.grid.minor =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{size =} \FloatTok{0.0625}\NormalTok{) }\CommentTok{\#minor grid lines}
+\NormalTok{       )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Using `size` aesthetic for lines was deprecated in ggplot2 3.4.0.
+## i Please use `linewidth` instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\begin{verbatim}
+## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## i Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\includegraphics{CSIT165_Lab5_files/figure-latex/ob1-1.pdf}
+
+\subsection{Objective 2}\label{objective-2}
+
+\emph{Understanding how COVID-19 enters human cells requires that we
+have a better understanding of human proteins. It has been shown that
+COVID-19 is able to enter cells by binding to Angiotensin-Converting
+Enzyme 2 receptors in the heart, lungs, and intestines.
+Angiotensin-Converting Enzyme 2 is used by the body to regulate blood
+pressure and inflammation.}
+
+\emph{1. Show how many different isoforms of Angiotensin-Converting
+Enzyme 2 humans make using str\_detect and regular expressions.}
+\emph{Use the pattern ``Angiotensin-Converting Enzyme 2 isoform'' with
+regular expressions to include all variations irrespective of first
+letter capitalization.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Renames human\_protiens data frame}
+\NormalTok{proteins }\OtherTok{\textless{}{-}}\NormalTok{ human\_proteins}
+\CommentTok{\# Check column names}
+\CommentTok{\#str(proteins)}
+
+\NormalTok{ace2\_isoforms }\OtherTok{\textless{}{-}}\NormalTok{ proteins }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\FunctionTok{str\_detect}\NormalTok{(Gene, }\FunctionTok{regex}\NormalTok{(}\StringTok{"Angiotensin{-}Converting Enzyme 2 isoform"}\NormalTok{, }\AttributeTok{ignore\_case =} \ConstantTok{TRUE}\NormalTok{)))}
+
+\FunctionTok{head}\NormalTok{(ace2\_isoforms)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   Gene                                       Protein.Sequence                   
+##   <chr>                                      <chr>                              
+## 1 angiotensin-converting enzyme 2 isoform X1 MSSSSWLLLSLVAVTAAQSTIEEQAKTFLDKFNH~
+## 2 angiotensin-converting enzyme 2 isoform X2 MSSSSWLLLSLVAVTAAQSTIEEQAKTFLDKFNH~
+## 3 angiotensin-converting enzyme 2 isoform X3 MSSSSWLLLSLVAVTAAQSTIEEQAKTFLDKFNH~
+\end{verbatim}
+
+\emph{2. Show the amino acid sequence between the 27th and 63rd amino
+acid sequence for each isoform using str\_sub.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Use str\_sub to extract positions 27 to 63 from Protein.Sequence}
+\NormalTok{ace2\_isoforms }\OtherTok{\textless{}{-}}\NormalTok{ ace2\_isoforms }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{seq\_27\_63 =} \FunctionTok{str\_sub}\NormalTok{(Protein.Sequence, }\DecValTok{27}\NormalTok{, }\DecValTok{63}\NormalTok{))}
+
+\CommentTok{\# Display the extracted subsequence}
+\NormalTok{ace2\_isoforms }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{select}\NormalTok{(Gene, seq\_27\_63)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   Gene                                       seq_27_63                          
+##   <chr>                                      <chr>                              
+## 1 angiotensin-converting enzyme 2 isoform X1 TFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQ~
+## 2 angiotensin-converting enzyme 2 isoform X2 TFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQ~
+## 3 angiotensin-converting enzyme 2 isoform X3 TFLDKFNHEAEDLFYQSSLASWNYNTNITEENVQ~
+\end{verbatim}
+
+\emph{3. Print a statement using cat with paste or sprintf of the first
+thirty amino acids for each isoform with a new line after each isoform
+and sequence listing. cat is necessary to use in combination with paste
+or sprintf to output concatenation with a new line.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{cat}\NormalTok{(}\StringTok{"First 30 amino acids of each isoform:}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## First 30 amino acids of each isoform:
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#for loop searches for string mathches}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(ace2\_isoforms)) \{}
+\NormalTok{  gene\_name }\OtherTok{\textless{}{-}}\NormalTok{ ace2\_isoforms}\SpecialCharTok{$}\NormalTok{Gene[i]}
+\NormalTok{  seq30 }\OtherTok{\textless{}{-}} \FunctionTok{str\_sub}\NormalTok{(ace2\_isoforms}\SpecialCharTok{$}\NormalTok{Protein.Sequence[i], }\DecValTok{1}\NormalTok{, }\DecValTok{30}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{sprintf}\NormalTok{(}\StringTok{"\%s: \%s}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{, gene\_name, seq30))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## angiotensin-converting enzyme 2 isoform X1: MSSSSWLLLSLVAVTAAQSTIEEQAKTFLD
+## 
+## angiotensin-converting enzyme 2 isoform X2: MSSSSWLLLSLVAVTAAQSTIEEQAKTFLD
+## 
+## angiotensin-converting enzyme 2 isoform X3: MSSSSWLLLSLVAVTAAQSTIEEQAKTFLD
+\end{verbatim}
+
+\end{document}
